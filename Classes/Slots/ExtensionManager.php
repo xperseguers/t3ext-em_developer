@@ -44,9 +44,11 @@ class ExtensionManager {
 	 * @param array $actions
 	 */
 	public function processActions(array $extensionInfo, array &$actions) {
-		$currentMd5Array = $this->serverExtensionMD5array($extensionInfo['key'], $extensionInfo);
-		if (!empty($extensionInfo['_md5_values_when_last_written']) && $extensionInfo['_md5_values_when_last_written'] !== serialize($currentMd5Array)) {
-			$actions[] = 'MODIFIED!';
+		if (!empty($extensionInfo['_md5_values_when_last_written'])) {
+			$currentMd5Array = $this->serverExtensionMD5array($extensionInfo['key'], $extensionInfo);
+			if ($extensionInfo['_md5_values_when_last_written'] !== serialize($currentMd5Array)) {
+				$actions[] = 'MODIFIED!';
+			}
 		}
 	}
 
